@@ -1,17 +1,19 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/layout/Navbar";
-import Sidebar from "../components/layout/Sidebar";
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Navbar from '../components/layout/Navbar';
+import Sidebar from '../components/layout/Sidebar';
 
-function DashboardLayout() {
+export default function DashboardLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans antialiased text-slate-800">
-      <Navbar />
+    <div className="min-h-screen bg-[#F8F9FF] flex flex-col font-sans antialiased text-slate-800">
+      <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        <main className="flex-1 bg-slate-50/80 p-6 md:p-8 overflow-y-auto max-h-[calc(100vh-4rem)]">
+        <main className="flex-1 bg-[#F8F9FF] p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[calc(100vh-4rem)]">
           <div className="max-w-7xl mx-auto space-y-6">
             <Outlet />
           </div>
@@ -20,5 +22,3 @@ function DashboardLayout() {
     </div>
   );
 }
-
-export default DashboardLayout;
